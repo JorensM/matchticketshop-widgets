@@ -1,0 +1,355 @@
+/*
+    Theme Name:   Matchticketshop theme
+    Theme URI:    matchticketshop.com
+    Description:  Theme for website matchticketshop.com
+    Author:       JorensM
+    Template:     hello-elementor
+    Version:      1.0.0
+    License:      GNU General Public License v2 or later
+    License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+    Text Domain:  matchticketshop
+*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+.mts-info,
+.mts-product-info{
+    font-family: 'Roboto', sans-serif;
+}
+
+.mts-main-content{
+    padding: 50px 170px;
+    padding-top: 240px;
+    box-sizing: border-box;
+    height: 1000px;
+}
+
+.mts-product-title{
+    font-size: 48px;
+    color: #0E1428;
+    font-family: 'Roboto', sans-serif;
+}
+
+.mts-info{
+    display: flex;
+
+}
+
+.mts-info-single{
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.mts-info-spacer{
+    width: 50px;
+}
+
+.mts-product-info{
+    width: 100%;
+    display: flex;
+}
+
+.mts-product-info-left{
+    width: 50%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.mts-product-info-right{
+    width: 50%;
+}
+
+.mts-product-info-legend{
+    display: flex;
+    justify-content: center;
+}
+
+.mts-legend-single{
+    height: 24px;
+    display: flex;
+    margin: 0px 40px; 
+}
+
+.mts-legend-box{
+    width: 20px;
+    height: 20px;
+}
+
+.mts-legend-label{
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.mts-tickets{
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5F5;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.mts-tickets-top{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.mts-tickets-middle{
+    height: fit-content;
+}
+
+.mts-tickets-middle-wrap{
+    width: 400px;
+}
+
+.mts-tickets-bottom{
+    display:flex;
+    align-items: center;
+    height: 100px;
+    font-size: 48px;
+    color: #BB2A21;
+    font-weight: 700;
+}
+
+.mts-tickets-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.mts-tickets-club{
+    margin-left: auto;
+    height: 60px;
+    width: 60px;
+}
+
+.mts-category-button{
+    display: flex;
+    height: 85px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.21);
+    padding: 30px 24px;
+    box-sizing: border-box;
+    color: white;
+    user-select: none;
+}
+
+.mts-category-button:hover{
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.21);
+}
+
+.mts-category-button-selected{
+    cursor: auto;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.21);
+}
+
+.mts-category-button-label, .mts-category-button-price{
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.mts-category-button-price{
+    margin-left: auto;
+}
+
+.mts-cat1-button{
+    background-color: #bed4e2;
+}
+
+.mts-cat1-button:hover{
+    background-color: #93B8D2;
+}
+
+.mts-cat1-button-selected{
+    background-color: #93B8D2;
+}
+
+.mts-cat2-button{
+    background-color: #EAF2D6;
+}
+
+.mts-cat2-button:hover{
+    background-color: #ACCA5A;
+}
+
+.mts-cat2-button-selected{
+    background-color: #ACCA5A;
+}
+
+.mts-cat3-button{
+    background-color: #bed4e2;
+}
+
+.mts-cat3-button:hover{
+    background-color: #93B8D2;
+}
+
+.mts-cat3-button-selected{
+    background-color: #93B8D2;
+}
+
+.mts-cat4-button{
+    background-color: #bed4e2;
+}
+
+.mts-cat4-button:hover{
+    background-color: #93B8D2;
+}
+
+.mts-cat4-button-selected{
+    background-color: #93B8D2;
+}
+
+.mts-tickets-select{
+    height: 60px;
+    display: flex;
+}
+
+.mts-tickets-select-left{
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.mts-tickets-select-right{
+    width: 60%;
+}
+
+.mts-buy-tickets{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #BB2A21;
+    height: 50px;
+    color: white;
+    font-weight: thin !important;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.mts-buy-tickets:hover{
+    background-color: #961f19;
+}
+
+.mts-tickets-qty{
+    display: flex;
+    height: 30px;
+    width: fit-content;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #D8D8D8;
+    background-color: white;
+    padding: 3px;
+    user-select: none;
+}
+
+.mts-tickets-qty-subtract{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: #3C8DF7;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.mts-tickets-qty-subtract:hover{
+    background-color: #2471d6;
+}
+
+.mts-tickets-qty-subtract-disabled{
+    background-color: #E9E9E9;
+    color: white;
+    cursor: auto;
+}
+
+.mts-tickets-qty-subtract-disabled:hover{
+    background-color: #E9E9E9 !important;
+}
+
+.mts-tickets-qty-middle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 28px;
+    font-size: 14px;
+    user-select: none;
+}
+
+.mts-tickets-qty-add{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: #3C8DF7;
+    color: white;
+    user-select: none;
+}
+
+.mts-tickets-qty-add:hover{
+    background-color: #2471d6;
+}
+
+/* Tabs */
+
+.mts-tabs{
+    width: 100%;
+}
+
+.mts-tabs-header{
+    display: flex;
+    height: 50px;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mts-tab-button{
+    width: fit-content;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mts-tab-button-selected{
+    border-bottom: 2px solid black;
+}
+
+.mts-tab{
+    display: none;
+
+    flex-direction: column;
+}
+
+.mts-tab-show{
+    display: flex;
+}
+
+.mts-tab-left{
+    display: flex;
+
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 50px;
+}
+
+.mts-tab-right{
+    width: 50%;
+    box-sizing: border-box;
+    padding-left: 50px;
+}
