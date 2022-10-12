@@ -53,6 +53,7 @@
 .mts-product-info-left{
     width: 50%;
     padding: 30px;
+    padding-left: 0px;
     box-sizing: border-box;
 }
 
@@ -79,6 +80,7 @@
 .mts-legend-label{
     font-size: 16px;
     font-weight: 400;
+    white-space: nowrap;
 }
 
 .mts-tickets{
