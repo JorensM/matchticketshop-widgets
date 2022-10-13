@@ -1,39 +1,39 @@
 <?php
 
-$category_colors = [
-    [
-        "regular" => "#93B8D2",
-        "dark" => "#6791AF",
-        "light" => "#bed4e2"
-    ],
-    [
-        "regular" => "#ACCA5A",
-        "light" => "#EAF2D6",
-        "dark" => "#97b73e"
-    ],[
-        "regular" => "#93B8D2",
-        "dark" => "#6791AF",
-        "light" => "#bed4e2"
-    ],[
-        "regular" => "#93B8D2",
-        "dark" => "#6791AF",
-        "light" => "#bed4e2"
-    ],
-];
+// $category_colors = [
+//     [
+//         "regular" => "#93B8D2",
+//         "dark" => "#6791AF",
+//         "light" => "#bed4e2"
+//     ],
+//     [
+//         "regular" => "#ACCA5A",
+//         "light" => "#EAF2D6",
+//         "dark" => "#97b73e"
+//     ],[
+//         "regular" => "#93B8D2",
+//         "dark" => "#6791AF",
+//         "light" => "#bed4e2"
+//     ],[
+//         "regular" => "#93B8D2",
+//         "dark" => "#6791AF",
+//         "light" => "#bed4e2"
+//     ],
+// ];
 
-$legend_colors = [
-    "#ACCA5A",
-    "#93B8D2",
-    "#93B8D2",
-    "#93B8D2"
-];
+// $legend_colors = [
+//     "#ACCA5A",
+//     "#93B8D2",
+//     "#93B8D2",
+//     "#93B8D2"
+// ];
 
-$category_labels = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-];
+// $category_labels = [
+//     "Category 1",
+//     "Category 2",
+//     "Category 3",
+//     "Category 4",
+// ];
 
 function render_info($icon_filename, $text){
     echo 
@@ -85,21 +85,30 @@ function render_legend($categories){
     $legend_colors = [
         "#ACCA5A",
         "#93B8D2",
-        "#93B8D2",
-        "#93B8D2"
+        "#F8B65F",
+        "#f78b8b"
+    ];
+
+    $legend_colors_dark = [
+        "#6791AF",
+        "#97b73e",
+        "#e29631",
+        "#db4e4e"
     ];
 
     foreach($categories as $key => $category){
         if($category !== null){
             echo 
-                "<div class='mts-legend-single'>
-                    <div class='mts-legend-box' style='background-color: " . $legend_colors[$key] . "'>
-                    </div>
-                    &nbsp;
-                    &nbsp;
-                    <span class='mts-legend-label'>
-                    Category " . $key + 1 . "
-                    </span>
+                "<div 
+                    class='mts-legend-single mts-legend-cat" . $key + 1 . "'
+                    onclick='select_category(" . ($key + 1) . ")'
+                >
+                        <div class='mts-legend-box mts-legend-box-cat" . $key + 1 . "'>
+                        </div>
+                        <span style='width: 15px'></span>
+                        <span class='mts-legend-label'>
+                        Category " . $key + 1 . "
+                        </span>
                 </div>";
         }
     }
@@ -228,6 +237,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
         
         ?>  
                 <span class='mts-product-title'><?php echo $product->get_name()?></span>
+                <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-info'>
                     <?php render_info("calendar.svg", $match_date) ?>
                     <span class='mts-info-spacer'></span>
@@ -238,6 +248,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     <?php render_info("trophy.svg", $match_championship) ?>
                     <span class='mts-info-spacer'></span>
                 </div>
+                <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-product-info'>
                     <div class='mts-product-info-left'>
                         <div class='mts-tickets'>
@@ -281,10 +292,11 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                             </div>
                             <span id='mts-error'></span>
                             <div class='mts-tickets-bottom'>
-                                Total: $<span id='mts-total-price'></span>
+                                Total €<span id='mts-total-price'></span>
                             </div>
                         </div>
                     </div>
+                    <div class='mts-v-spacer-s-mobile'></div>
                     <div class='mts-product-info-right'>
                         <div class="mts-product-info-img">
                             <img src="<?php echo $stadium_img_url ?>">
@@ -295,6 +307,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         </div>
                     </div>
                 </div>
+                <div class='mts-v-spacer-s-mobile'></div>
                 <script>
                     const error_element = document.getElementById("mts-error");
 

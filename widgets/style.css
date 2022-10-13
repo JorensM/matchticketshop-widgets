@@ -11,6 +11,24 @@
 */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root{
+    --cat1-ligh: #bed4e2;
+    /* --cat1-regular: #93B8D2; */
+    --cat1-regular: #92B7D1;
+    --cat1-dark: #6791AF;
+
+    --cat2-light: #EAF2D6;
+    --cat2-regular: #ACCA5A;
+    --cat2-dark: #97b73e;
+
+    --cat3-light: #f4d1a4;
+    --cat3-regular: #F8B65F;
+    --cat3-dark: #e29631;
+
+    --cat4-light: #f4a4a4;
+    --cat4-regular: #f78b8b;
+    --cat4-dark: #db4e4e;
+}
 
 .mts-info,
 .mts-product-info{
@@ -27,7 +45,9 @@
 .mts-product-title{
     font-size: 48px;
     color: #0E1428;
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    line-height: 45px;
 }
 
 .mts-info{
@@ -64,17 +84,73 @@
 .mts-product-info-legend{
     display: flex;
     justify-content: center;
+    align-items: center;
+    /* width: 450px; */
+    margin: 0px;
+    flex-wrap: wrap;
 }
 
 .mts-legend-single{
     height: 24px;
     display: flex;
-    margin: 0px 40px; 
+    margin: 0px 20px; 
+    cursor: pointer;
 }
 
 .mts-legend-box{
     width: 20px;
     height: 20px;
+}
+
+.mts-legend-box-cat1, 
+.mts-legend-box-cat2, 
+.mts-legend-box-cat3, 
+.mts-legend-box-cat4{
+    transition: all 0.2 ease-in-out;
+    box-shadow: 0px 0px 0px gray;
+}
+
+.mts-legend-box-cat1{
+    background-color: var(--cat1-regular);
+}
+
+.mts-legend-cat1:hover .mts-legend-box-cat1{
+    background-color: var(--cat1-dark);
+    box-shadow: 0px 0px 2px gray;
+}
+
+.mts-legend-box-cat2{
+    background-color: var(--cat2-regular);
+}
+
+.mts-legend-cat2:hover .mts-legend-box-cat2{
+    background-color: var(--cat2-dark);
+    box-shadow: 0px 0px 2px gray;
+}
+
+.mts-legend-box-cat3{
+    background-color: var(--cat3-regular);
+}
+
+.mts-legend-cat3:hover .mts-legend-box-cat3{
+    background-color: var(--cat3-dark);
+    box-shadow: 0px 0px 2px gray;
+}
+
+.mts-legend-box-cat4{
+    background-color: var(--cat4-regular);
+}
+
+.mts-legend-cat4:hover .mts-legend-box-cat4{
+    background-color: var(--cat4-dark);
+    box-shadow: 0px 0px 2px gray;
+}
+
+.mts-legend-box-cat1:hover,
+.mts-legend-box-cat2:hover,
+.mts-legend-box-cat3:hover,
+.mts-legend-box-cat4:hover{
+    box-shadow: 0px 0px 2px gray;
 }
 
 .mts-legend-label{
@@ -105,6 +181,7 @@
 
 .mts-tickets-middle-wrap{
     width: 400px;
+    /* width: 60%; */
 }
 
 .mts-tickets-bottom{
@@ -184,27 +261,27 @@
 }
 
 .mts-cat3-button{
-    background-color: #bed4e2;
+    background-color: var(--cat3-light);
 }
 
 .mts-cat3-button:hover{
-    background-color: #93B8D2;
+    background-color: var(--cat3-regular);
 }
 
 .mts-cat3-button-selected{
-    background-color: #93B8D2;
+    background-color: var(--cat3-regular);
 }
 
 .mts-cat4-button{
-    background-color: #bed4e2;
+    background-color: var(--cat4-light);
 }
 
 .mts-cat4-button:hover{
-    background-color: #93B8D2;
+    background-color: var(--cat4-regular);
 }
 
 .mts-cat4-button-selected{
-    background-color: #93B8D2;
+    background-color: var(--cat4-regular);
 }
 
 .mts-tickets-select{
@@ -355,3 +432,76 @@
     box-sizing: border-box;
     padding-left: 50px;
 }
+
+.mts-v-spacer-s-mobile{
+    height: 0px;
+}
+
+@media screen and (max-width: 1000px){
+    .mts-product-info{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .mts-tickets-middle-wrap{
+        width: 100%;
+    }
+
+    .mts-product-info-left{
+        width: 60%;
+        padding: 0px;
+    }
+
+    .mts-product-info-right{
+        width: 60%;
+    }
+
+    
+}
+
+
+
+@media screen and (max-width: 800px) {
+    .mts-product-info-right{
+        width: 100%;
+    }
+
+    .mts-product-info-left{
+        width: 100%;
+    }
+
+    .mts-info{
+        flex-direction: column;
+    }
+
+    .mts-info-single{
+        height: 35px;
+    }
+
+    .mts-v-spacer-s-mobile{
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .mts-product-title{
+        font-size: 38px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .mts-tickets-qty-middle{
+        width: 60px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .mts-tickets-select-left{
+        width: fit-content;
+    }
+
+    .mts-tickets-select-right{
+        flex-grow: 1;
+    }
+}
+
