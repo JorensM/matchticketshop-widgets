@@ -236,6 +236,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
         }
         
         ?>  
+                <?php echo $team_1_img_url ?>
                 <span class='mts-product-title'><?php echo $product->get_name()?></span>
                 <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-info'>

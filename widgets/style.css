@@ -68,12 +68,14 @@
 .mts-product-info{
     width: 100%;
     display: flex;
+    margin-top: 40px;
 }
 
 .mts-product-info-left{
     width: 50%;
     padding: 30px;
     padding-left: 0px;
+    padding-top: 0px;
     box-sizing: border-box;
 }
 
@@ -441,6 +443,7 @@
     .mts-product-info{
         flex-direction: column-reverse;
         align-items: center;
+        margin-top: 0px;
     }
 
     .mts-tickets-middle-wrap{
