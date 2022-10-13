@@ -61,7 +61,7 @@ function render_category_button(WC_Product_Variation $category, $index){
             onclick='select_category(" . ($index + 1) . ")'
         >
         <span class='mts-category-button-label'>" . $label . "</span>
-        <span class='mts-category-button-price'>$" . $price . "</span>
+        <span class='mts-category-button-price'>€" . $price . "</span>
         </div>";
 }
 
@@ -236,7 +236,6 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
         }
         
         ?>  
-                <?php echo $team_1_img_url ?>
                 <span class='mts-product-title'><?php echo $product->get_name()?></span>
                 <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-info'>
@@ -330,6 +329,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
                     let selected_category = 1;
                     select_category(1);
+                    select_cheapest_category();
                     
 
                     render_total_price();
@@ -401,6 +401,23 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         const total_price_element = document.getElementById("mts-total-price");
 
                         total_price_element.innerHTML = total_price;
+                    }
+
+                    function select_cheapest_category(){
+                        let min = 99999;
+                        let min_index = -1;
+                        category_prices.forEach((price, index) => {
+                            if(price !== null && price < min){
+                                min = price;
+                                min_index = index;
+                            }
+                        })
+                        console.log("prices: ");
+                        console.log(category_prices);
+                        console.log("cheapest category: ");
+                        console.log(min);
+                        console.log(min_index);
+                        select_category(min_index + 1);
                     }
 
                     function goto_checkout(){
