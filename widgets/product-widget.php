@@ -175,7 +175,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Custom Product Widget', '' );
+		return esc_html__( 'Custom Product Widget', 'mts-widget' );
 	}
 
 	public function get_icon() {
@@ -210,6 +210,8 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 	protected function render() {
         global $product;
 
+        $test = "123";
+
         $match_date = date("l, j F", strtotime($product->get_meta("match-date")));
         $match_time = $product->get_meta("match-time");
         $match_location = $product->get_meta("match-location");
@@ -234,7 +236,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
             }
             
         }
-        
+            setcookie("checkout_url", wc_get_checkout_url());
         ?>  
                 <span class='mts-product-title'><?php echo $product->get_name()?></span>
                 <div class='mts-v-spacer-s-mobile'></div>
@@ -311,15 +313,15 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 <script>
                     const error_element = document.getElementById("mts-error");
 
-                    const product_id = <?php echo $product->get_id() ?>
+                    const product_id = <?php echo $product->get_id(); ?>
 
                     let total_price = 0;
 
                     const category_prices = [
-                        <?php echo $category_prices[0] ?>,
-                        <?php echo $category_prices[1] ?>,
-                        <?php echo $category_prices[2] ?>,
-                        <?php echo $category_prices[3] ?>,
+                        <?php echo $category_prices[0]; ?>,
+                        <?php echo $category_prices[1]; ?>,
+                        <?php echo $category_prices[2]; ?>,
+                        <?php echo $category_prices[3]; ?>,
                     ];
 
                     let tickets_qty = 1;

@@ -1,32 +1,61 @@
-function getParameter (name, url) {
-    if (!url) url = getScriptName()
-    name = name.replace(/[\[\]]/g, '\\$&')
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-    var results = regex.exec(url)
-    if (!results) return null
-    if (!results[2]) return ''
-    return decodeURIComponent(results[2].replace(/\+/g, ' '))
+function getLastUrlSegment(url) {
+  return new URL(url).pathname.split('/').filter(Boolean).pop();
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
   }
+  return "";
+}
 
-  // Gets the name of this script (whatever this file runs in)
-  // You can use this name to get parameters just like you would for the window URL :)
-  function getScriptName () {
-    var error = new Error(),
-      source,
-      lastStackFrameRegex = new RegExp(/.+\/(.*?):\d+(:\d+)*$/),
-      currentStackFrameRegex = new RegExp(/getScriptName \(.+\/(.*):\d+:\d+\)/)
+// Render functions
 
-    if ((source = lastStackFrameRegex.exec(error.stack.trim())) && source[1] !== '')
-      return source[1]
-    else if ((source = currentStackFrameRegex.exec(error.stack.trim())))
-      return source[1]
-    else if (error.fileName !== undefined)
-      return error.fileName
+function renderInfo()
+
+const product_slug = getLastUrlSegment(window.location.href);
+
+const url = "https://www.matchticketshop.com/wp-json/wc/v3/products/?slug=" + product_slug;
+
+const public_key = "ck_3a8304f13c13bde4ade25d749ebd4227034877f0";
+const private_key = "cs_4ee08ab9223aaee0060de1c4924d7a02449f99e7";
+
+//Data
+
+ticket_qty = 0;
+
+const checkout_url = getCookie("checkout_url");
+
+console.log(checkout_url);
+
+const request = new Request(url, {
+  headers: {
+    "Content-Type": "application/json",
+    'Accept': 'application/json',
+    "Authorization": " Basic " + base64(public_key + ":" + private_key)
   }
+})
 
-console.log("test");
-// const product_id = document.currentScript.getAttribute("product-id");
-// console.log("product id: ");
-// console.log(product_id);
+console.log(request);
 
-console.log(get_selected_product());
+console.log("fetching...");
+fetch(request)
+  .then(response => response.json())
+  .then(product => {
+    //console.log("data");
+    //console.log(data);
+  })
+  .catch(err => {
+    console.log("fetch err");
+    console.log(err);
+  });
+
