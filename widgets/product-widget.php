@@ -212,33 +212,49 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
         $test = "123";
 
-        $match_date = date("l, j F", strtotime($product->get_meta("match-date")));
-        $match_time = $product->get_meta("match-time");
-        $match_location = $product->get_meta("match-location");
-        $match_championship = $product->get_meta("championship-name");
+        $match_date = null;
+        $match_time = null;
+        $match_location = null;
+        $match_championship = null;
+        $team_1_img_url = null;
+        $team_2_img_url = null;
+        $stadium_img_url = null;
+        $categories = null;
 
-        $team_1_img_url = $product->get_meta("1st-team-image");
-        $team_2_img_url = $product->get_meta("2nd-team-image");
-        $stadium_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $product->get_id() ), 'single-post-thumbnail' )[0];
+        if(!\Elementor\Plugin::$instance->editor->is_edit_mode()){
+            $match_date = date("l, j F", strtotime($product->get_meta("match-date")));
+            $match_time = $product->get_meta("match-time");
+            $match_location = $product->get_meta("match-location");
+            $match_championship = $product->get_meta("championship-name");
 
-        $categories = [
-            get_variation_by_name($product, "Category 1"),
-            get_variation_by_name($product, "Category 2"),
-            get_variation_by_name($product, "Category 3"),
-            get_variation_by_name($product, "Category 4")
-        ];
+            $team_1_img_url = $product->get_meta("1st-team-image");
+            $team_2_img_url = $product->get_meta("2nd-team-image");
+            $stadium_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $product->get_id() ), 'single-post-thumbnail' )[0];
 
-        foreach($categories as $key => $category){
-            if($category !== null){
-                $category_prices[$key] = $category->get_regular_price();
-            }else{
-                $category_prices[$key] = "null";
+            $categories = [
+                get_variation_by_name($product, "Category 1"),
+                get_variation_by_name($product, "Category 2"),
+                get_variation_by_name($product, "Category 3"),
+                get_variation_by_name($product, "Category 4")
+            ];
+
+            foreach($categories as $key => $category){
+                if($category !== null){
+                    $category_prices[$key] = $category->get_regular_price();
+                }else{
+                    $category_prices[$key] = "null";
+                }
+                
             }
-            
-        }
             setcookie("checkout_url", wc_get_checkout_url());
-        ?>  
-                <span class='mts-product-title'><?php echo $product->get_name()?></span>
+        }
+        
+
+            if(\Elementor\Plugin::$instance->editor->is_edit_mode()){
+                echo "Product Widget";
+            }else{
+                ?>
+                    <span class='mts-product-title'><?php echo $product->get_name()?></span>
                 <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-info'>
                     <?php render_info("calendar.svg", $match_date) ?>
@@ -455,6 +471,12 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     }
 
                 </script>
+                <?php
+            }
+        ?>      
+
+                
+                
         <?php
 	}
 }
