@@ -57,9 +57,10 @@ function render_category_button(WC_Product_Variation $category, $index){
     echo 
         "<div 
             id='mts-category-button-" . ($index + 1) . "'
-            class='mts-category-button mts-cat" . ($index + 1) . "-button'
+            class='mts-category-button'
             onclick='select_category(" . ($index + 1) . ")'
         >
+        <div class='mts-cat-box mts-cat" . ($index + 1) . "-box'></div>
         <span class='mts-category-button-label'>" . $label . "</span>
         <span class='mts-category-button-price'>€" . $price . "</span>
         </div>";
@@ -167,6 +168,12 @@ function after_page_load(){
 
 add_action("wp_loaded", "after_page_load");
 
+function team_names_from_product($product_name){
+    $name = str_replace("Tickets ", "", $product_name);
+    $output = explode("vs.", $name);
+    return $output;
+}
+
 
 class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
@@ -223,6 +230,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
         if(!\Elementor\Plugin::$instance->editor->is_edit_mode()){
             $match_date = date("l, j F", strtotime($product->get_meta("match-date")));
+            $match_date_new = date("j F o", strtotime($product->get_meta("match-date")));
             $match_time = $product->get_meta("match-time");
             $match_location = $product->get_meta("match-location");
             $match_championship = $product->get_meta("championship-name");
@@ -247,6 +255,8 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 
             }
             setcookie("checkout_url", wc_get_checkout_url());
+
+            $team_names = team_names_from_product($product->get_name());
         }
         
 
@@ -254,28 +264,38 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 echo "Product Widget";
             }else{
                 ?>
-                    <span class='mts-product-title'><?php echo $product->get_name()?></span>
-                <div class='mts-v-spacer-s-mobile'></div>
-                <div class='mts-info'>
-                    <?php render_info("calendar.svg", $match_date) ?>
-                    <span class='mts-info-spacer'></span>
-                    <?php render_info("clock.svg", $match_time) ?>
-                    <span class='mts-info-spacer'></span>
-                    <?php render_info("location.svg", $match_location) ?>
-                    <span class='mts-info-spacer'></span>
-                    <?php render_info("trophy.svg", $match_championship) ?>
-                    <span class='mts-info-spacer'></span>
+                <div class='mts-product-header'>
+                    <div class="mts-product-header-left">
+                        <img class='mts-tickets-club' src='<?php echo $team_1_img_url; ?>'>
+                        <?php echo $team_names[0]; ?>
+                    </div>
+                    <div class="mts-product-header-middle">
+                        <div class='mts-product-header-middle-top'>
+                            <img class='mts-product-header-stadium-img' src='<?php echo $team_1_img_url; ?>'>
+                        </div>
+                        <span class='mts-product-header-vs'>VS</span>
+                        <div class='mts-product-header-middle-spacer'></div>
+                        <div class='mts-product-header-middle-bottom'>
+                            <span class='mts-product-header-stadium'><?php echo $match_location ?></span>
+                            <span class='mts-product-header-date'><?php echo $match_date_new ?> <?php echo $match_time ?></span>
+                        </div>
+                    </div>
+                    <div class="mts-product-header-right">
+                        <img class='mts-tickets-club' src='<?php echo $team_2_img_url; ?>'>
+                        <?php echo $team_names[1]; ?>
+                    </div>
                 </div>
-                <div class='mts-v-spacer-s-mobile'></div>
                 <div class='mts-product-info'>
                     <div class='mts-product-info-left'>
+                        <div class='mts-tickets-title'>
+                            CHOOSE A CATEGORY OF SEATS
+                        </div>
                         <div class='mts-tickets'>
                             <div class='mts-tickets-top'>
-                                <div class='mts-tickets-title'>
-                                    CHOOSE A CATEGORY OF SEATS
+                                <div class='mts-tickets-top-wrap'>
+                                    <span>Category</span>
+                                    <span>Price</span>
                                 </div>
-                                <img class='mts-tickets-club' src='<?php echo $team_1_img_url; ?>'>
-                                <img class='mts-tickets-club' src='<?php echo $team_2_img_url; ?>'>
                             </div>
                             <div class='mts-tickets-middle'>
                                 <div class='mts-tickets-middle-wrap'>
@@ -286,11 +306,12 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                                             }
                                         }
                                     ?>
+                                    <div class='mts-choose-qty'>Choose Quantity</div>
                                     <div class='mts-tickets-select'>
                                         <div class='mts-tickets-select-left'>
                                             <div class='mts-tickets-qty'>
                                                 <div id='mts-tickets-qty-subtract' class='mts-tickets-qty-subtract' onclick='subtract_ticket()'>
-                                                    -
+                                                    ─
                                                 </div>
                                                 <div id='mts-tickets-qty' class='mts-tickets-qty-middle'>
                                                     1 ticket
@@ -300,17 +321,18 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class='mts-tickets-select-right'>
-                                            <div class='mts-buy-tickets' onclick='goto_checkout()'>
-                                                BUY TICKETS
-                                            </div>
-                                        </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <span id='mts-error'></span>
                             <div class='mts-tickets-bottom'>
-                                Total €<span id='mts-total-price'></span>
+                                <div class='mts-tickets-total'>
+                                    Total €<span id='mts-total-price'></span>
+                                </div>
+                                <div class='mts-buy-tickets' onclick='goto_checkout()'>
+                                    BUY TICKETS
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -394,7 +416,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         deselect_all_categories();
                         
                         category_button_element.classList.add("mts-category-button-selected");
-                        category_button_element.classList.add("mts-cat" + category_number + "-button-selected");
+                        //category_button_element.classList.add("mts-cat" + category_number + "-button-selected");
 
                         render_total_price();
                     }
