@@ -168,6 +168,17 @@ function after_page_load(){
 
 add_action("wp_loaded", "after_page_load");
 
+function css_hook(){
+    echo "
+            <link
+            rel='stylesheet'
+            href='https://unpkg.com/tippy.js@6/themes/light.css'
+        />
+    ";
+}
+
+add_action("wp_head", "css_hook");
+
 function team_names_from_product($product_name){
     $name = str_replace("Tickets ", "", $product_name);
     $output = explode("vs.", $name);
@@ -264,7 +275,12 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 echo "Product Widget";
             }else{
                 ?>
+                <script src="https://unpkg.com/@popperjs/core@2"></script>
+                <script src="https://unpkg.com/tippy.js@6"></script>
                 <div class='mts-product-header'>
+                    <div class="mts-product-header-overlay">
+                        
+                    </div>
                     <div class="mts-product-header-left">
                         <img class='mts-tickets-club' src='<?php echo $team_1_img_url; ?>'>
                         <?php echo $team_names[0]; ?>
@@ -285,12 +301,12 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         <?php echo $team_names[1]; ?>
                     </div>
                 </div>
-                <div class='mts-product-info'>
+                <div class='mts-product-info' id="mts-product-info">
                     <div class='mts-product-info-left'>
-                        <div class='mts-tickets-title'>
-                            CHOOSE A CATEGORY OF SEATS
-                        </div>
-                        <div class='mts-tickets'>
+                        <div class="mts-tickets-cats" id="mts-tickets-cats">
+                            <div class='mts-tickets-title'>
+                                CHOOSE A CATEGORY OF SEATS
+                            </div>
                             <div class='mts-tickets-top'>
                                 <div class='mts-tickets-top-wrap'>
                                     <span>Category</span>
@@ -306,33 +322,43 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                                             }
                                         }
                                     ?>
-                                    <div class='mts-choose-qty'>Choose Quantity</div>
-                                    <div class='mts-tickets-select'>
-                                        <div class='mts-tickets-select-left'>
-                                            <div class='mts-tickets-qty'>
-                                                <div id='mts-tickets-qty-subtract' class='mts-tickets-qty-subtract' onclick='subtract_ticket()'>
-                                                    ─
-                                                </div>
-                                                <div id='mts-tickets-qty' class='mts-tickets-qty-middle'>
-                                                    1 ticket
-                                                </div>
-                                                <div id='mts-tickets-qty-add' class='mts-tickets-qty-add' onclick='add_ticket()'>
-                                                    +
-                                                </div>
-                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class='mts-tickets'>
+                            
+                            <div class='mts-choose-qty'>Choose Quantity</div>
+                            <div class='mts-tickets-select'>
+                                <div class='mts-tickets-select-left'>
+                                    <div class='mts-tickets-qty'>
+                                        <div id='mts-tickets-qty-subtract' class='mts-tickets-qty-subtract' onclick='subtract_ticket()'>
+                                            ─
+                                        </div>
+                                        <div id='mts-tickets-qty' class='mts-tickets-qty-middle'>
+                                            1 ticket
+                                        </div>
+                                        <div id='mts-tickets-qty-add' class='mts-tickets-qty-add' onclick='add_ticket()'>
+                                            +
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <span id='mts-error'></span>
                             <div class='mts-tickets-bottom'>
-                                <div class='mts-tickets-total'>
-                                    Total €<span id='mts-total-price'></span>
+                                <div class="mts-tickets-total">
+                                    <div class='mts-tickets-total-left'>Total: &nbsp;</div>
+                                    <div class='mts-tickets-total-right'>€<span id='mts-total-price'></span></div>
                                 </div>
                                 <div class='mts-buy-tickets' onclick='goto_checkout()'>
                                     BUY TICKETS
                                 </div>
+                                <!-- <div class='mts-tickets-total'>
+                                    Total €<span id='mts-total-price'></span>
+                                </div>
+                                <div class='mts-buy-tickets' onclick='goto_checkout()'>
+                                    BUY TICKETS
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -349,11 +375,41 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 </div>
                 <div class='mts-v-spacer-s-mobile'></div>
                 <script>
+                    const vp_width = document.documentElement.clientWidth;
+
+                    const tooltip = tippy("#mts-tickets-qty-add", {
+                        placement: (() => {
+                            if(vp_width < 1000){
+                                return "top";
+                            }else{
+                                return "right";
+                            }
+                        })(),
+                        theme: "light",
+                        maxWidth: "180px",
+                        onHide: () => {
+                            if(tickets_qty > 1){
+                                return false;
+                            }
+                            return true;
+                        }
+                    })[0];
+                    tooltip.disable();
+
+                    const cats_element = document.getElementById("mts-tickets-cats");
+                    const info_element = document.getElementById("mts-product-info");
+
+                    if(vp_width < 1000){
+                        info_element.appendChild(cats_element);
+                    }
+
                     const error_element = document.getElementById("mts-error");
 
                     const product_id = <?php echo $product->get_id(); ?>
 
                     let total_price = 0;
+
+
 
                     const category_prices = [
                         <?php echo $category_prices[0]; ?>,
@@ -389,6 +445,13 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         tickets_qty++;
                         render_tickets_select();
                         render_total_price();
+
+                        if(tickets_qty > 1){
+                            tooltip.show();
+                        }else{
+                            tooltip.hide();
+                        }
+                        
                     }
 
                     function render_tickets_qty(){
@@ -406,6 +469,22 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     function render_tickets_select(){
                         render_tickets_qty();
                         render_tickets_subtract();
+
+                        if(tickets_qty === 1){
+                            console.log("one");
+                            tooltip.disable();
+                        }
+                        if(tickets_qty === 2){
+                            console.log("two");
+                            tooltip.enable();
+                            tooltip.setContent("We guarantee that you will be seated together");
+                            //tooltip.show();
+                        }else if(tickets_qty > 2){
+                            console.log("three");
+                            tooltip.setContent("You will likely be seated together, please reach out through chat so our team can confirm");
+                            tooltip.enable();
+                            //tooltip.show();
+                        }
                     }
 
                     function select_category(category_number){

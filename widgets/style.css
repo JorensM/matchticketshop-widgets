@@ -30,6 +30,10 @@
     --cat4-dark: #db4e4e;
 }
 
+.body, html{
+    font-family: "Gilroy3", sans-serif;
+}
+
 .elementor-element-populated{
     padding: 0px !important;
 }
@@ -40,9 +44,17 @@
     display: flex;
     flex-direction: row;
     padding: 80px 280px;
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
     margin-bottom: 40px;
     box-shadow: 0px 0px 64px rgba(0, 0, 0, 0.11);
+    background-image:
+    linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 68%, rgba(144,144,144,0) 100%),
+    url("https://www.matchticketshop.com/wp-content/uploads/unsplash_XhjaJjS-mqU.png");
+    /* background-image: url("https://www.matchticketshop.com/wp-content/uploads/unsplash_XhjaJjS-mqU.png"); */
+}
+
+.mts-product-header-overlay{
+
 }
 
 .mts-product-header-middle, .mts-product-header-right, .mts-product-header-left{
@@ -59,6 +71,7 @@
     width: 25%;
     padding-top: 15px;
     box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .mts-product-header-middle{
@@ -107,7 +120,7 @@
 
 .mts-info,
 .mts-product-info{
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
 }
 
 .mts-main-content{
@@ -120,7 +133,7 @@
 .mts-product-title{
     font-size: 48px;
     color: #0E1428;
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
     font-weight: 600;
     line-height: 45px;
 }
@@ -261,6 +274,7 @@
     align-items: center;
     justify-content: flex-start;
     /* margin-bottom: 15px; */
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 
@@ -269,7 +283,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 26px 24px;
+    padding: 26px 28px;
     color: #0E1428;
     font-size: 17px;
     font-weight: 400;
@@ -286,11 +300,28 @@
 
 .mts-tickets-bottom{
     display:flex;
-    align-items: center;
-    height: 100px;
-    font-size: 48px;
-    color: #BB2A21;
-    font-weight: 700;
+    flex-direction: column;
+    align-items: flex-start;
+    /* height: 100px; */
+}
+
+.mts-tickets-total{
+    display: flex;
+    height: fit-content;
+    width: 450px;
+    padding: 20px;
+    padding-left: 0px;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.mts-tickets-total-left, .mts-tickets-total-right{
+
+}
+
+.mts-tickets-total-right{
+    margin-left: auto;
 }
 
 .mts-tickets-title{
@@ -454,9 +485,12 @@
     height: 50px;
     color: white;
     font-weight: thin !important;
+    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    width: 170px;
+    height: 55px;
 }
 
 .mts-buy-tickets:hover{
@@ -511,9 +545,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90px;
+    width: 120px;
     height: 40px;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: 600;
     user-select: none;
 }
 
@@ -525,6 +560,41 @@
     width: 40px;
     height: 40px;
     user-select: none;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+  
+.tooltip .tooltiptext {
+    /* visibility: hidden; */
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    /* top: -5px; */
+    top: -14px;
+    left: 10px;
+}
+  
+/* .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+} */
+.tooltip:hover .tooltiptext {
+    /* visibility: visible; */
 }
 
 /* Tabs */
@@ -601,10 +671,66 @@
         width: 60%;
     }
 
+    .mts-product-header{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .mts-tickets-title{
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .mts-tickets-total{
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .mts-tickets-total-right{
+        margin-left: 0px;
+    }
+
+    .mts-tickets-select{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+    }
+
+    .mts-tickets-select-left{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mts-tickets-bottom{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mts-choose-qty{
+        text-align: center;
+    }
     
 }
 
+@media screen and (max-width: 1270px){
+    .mts-tickets-middle-wrap{
+        width: 100%;
+    }
 
+    .mts-tickets-total{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .mts-product-info{
+        padding: 0px 40px;
+    }
+}
 
 @media screen and (max-width: 800px) {
     .mts-product-info-right{
@@ -626,17 +752,47 @@
     .mts-v-spacer-s-mobile{
         height: 30px;
     }
+
+    .mts-tickets-title{
+        text-align: center;
+    }
+
+    .mts-tickets-top-wrap{
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 600px){
     .mts-product-title{
         font-size: 38px;
     }
+
+    .mts-product-info{
+        padding: 0px 5px !important;
+    }
 }
 
 @media screen and (max-width: 500px){
     .mts-tickets-qty-middle{
-        width: 60px;
+        width: 80px;
+    }
+
+    .mts-tickets-club{
+        margin-bottom: 15px;
+        width: 50px;
+    }
+
+    .mts-product-header-left, .mts-product-header-right{
+        font-size: 20px;
+
+    }
+
+    .mts-buy-tickets{
+        width: 100%;
+    }
+
+    .mts-product-header-vs{
+        font-size: 34px;
     }
 }
 
