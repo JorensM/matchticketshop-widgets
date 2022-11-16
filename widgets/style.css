@@ -53,9 +53,6 @@
     /* background-image: url("https://www.matchticketshop.com/wp-content/uploads/unsplash_XhjaJjS-mqU.png"); */
 }
 
-.mts-product-header-overlay{
-
-}
 
 .mts-product-header-middle, .mts-product-header-right, .mts-product-header-left{
     display: flex;
@@ -71,7 +68,8 @@
     width: 25%;
     padding-top: 15px;
     box-sizing: border-box;
-    white-space: nowrap;
+    text-align: center;
+    /* white-space: nowrap; */
 }
 
 .mts-product-header-middle{
@@ -118,10 +116,6 @@
     width: 68px;
 }
 
-.mts-info,
-.mts-product-info{
-    /* font-family: 'Roboto', sans-serif; */
-}
 
 .mts-main-content{
     padding: 50px 170px;
@@ -316,9 +310,6 @@
     font-weight: 600;
 }
 
-.mts-tickets-total-left, .mts-tickets-total-right{
-
-}
 
 .mts-tickets-total-right{
     margin-left: auto;
@@ -593,9 +584,7 @@
     border-style: solid;
     border-color: transparent black transparent transparent;
 } */
-.tooltip:hover .tooltiptext {
-    /* visibility: visible; */
-}
+
 
 /* Tabs */
 
@@ -649,6 +638,47 @@
 
 .mts-v-spacer-s-mobile{
     height: 0px;
+}
+
+/* Listing date widget */
+
+.mts-listing-date{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    padding: 13px 7px;
+    box-sizing: border-box;
+}
+
+.mts-listing-date-top, .mts-listing-date-bottom{
+    display: flex;
+    height: 20%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #8F8E94;
+}
+
+.mts-listing-date-middle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0E1428;
+}
+
+.mts-listing-date-top{
+    align-items: flex-end;
+}
+
+.mts-listing-date-bottom{
+    align-items: flex-start;
 }
 
 @media screen and (max-width: 1000px){
@@ -796,6 +826,16 @@
     }
 }
 
+@media screen and (max-width: 425px){
+    .mts-product-header-stadium{
+        font-size: 14px;
+    }
+
+    .mts-product-header-date{
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 400px){
     .mts-tickets-select-left{
         width: fit-content;
@@ -803,6 +843,23 @@
 
     .mts-tickets-select-right{
         flex-grow: 1;
+    }
+}
+
+@media screen and (max-width: 767px){
+
+    .mts-listing-date-top, .mts-listing-date-bottom, .mts-listing-date-middle{
+        line-height: 12px;
+    }
+
+    .mts-listing-date-top, .mts-listing-date-bottom{
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .mts-listing-date-middle{
+        font-size: 14px;
+        font-weight: 600;
     }
 }
 

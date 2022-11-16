@@ -116,6 +116,42 @@ function render_legend($categories){
     
 }
 
+//FC Barcelona = fcbarcelona
+function cleanstr($str) {
+    $new_string = urlencode(strtolower(str_replace(" ","",preg_replace("/([a-z])[a-z]+;/i", "$1", htmlentities($str)))));
+    $newer_string = preg_replace('/[^A-Za-z0-9\-]/', '', $new_string);
+    return $newer_string;
+}
+
+//FC Barcelona = FCBarcelona
+function cleanstr2($str){
+    $new_string = urlencode(str_replace(" ","",preg_replace("/([a-z])[a-z]+;/i", "$1", htmlentities($str))));
+    $newer_string = preg_replace('/[^A-Za-z0-9\-]/', '', $new_string);
+    return $newer_string;
+}
+
+//Check if file exists on the given url
+function file_exists_on_url($url){
+    $file = $url;
+    $file_headers = @get_headers($file);
+    if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        return false;
+    }
+    else {
+        return true;
+    } 
+}
+
+function get_championship_img($championship_name){
+    $png_url = wp_upload_dir()["url"] . "/" . cleanstr($championship_name) . ".png";
+    $svg_url = wp_upload_dir()["url"] . "/" . cleanstr($championship_name) . ".svg";
+
+    if(!file_exists_on_url($png_url)){
+        return $svg_url;
+    }
+    return $png_url;
+}
+
 //$product = wc_get_product();
 
 // $match_date = date("l, j F", strtotime($product->get_meta("match-date")));
@@ -228,6 +264,8 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 	protected function render() {
         global $product;
 
+        //$product = wc_get_product();
+
         $test = "123";
 
         $match_date = null;
@@ -249,6 +287,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
             $team_1_img_url = $product->get_meta("1st-team-image");
             $team_2_img_url = $product->get_meta("2nd-team-image");
             $stadium_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $product->get_id() ), 'single-post-thumbnail' )[0];
+            $championship_img_url = get_championship_img($match_championship);
 
             $categories = [
                 get_variation_by_name($product, "Category 1"),
@@ -287,7 +326,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     </div>
                     <div class="mts-product-header-middle">
                         <div class='mts-product-header-middle-top'>
-                            <img class='mts-product-header-stadium-img' src='<?php echo $team_1_img_url; ?>'>
+                            <img class='mts-product-header-stadium-img' src='<?php echo $championship_img_url; ?>'>
                         </div>
                         <span class='mts-product-header-vs'>VS</span>
                         <div class='mts-product-header-middle-spacer'></div>
