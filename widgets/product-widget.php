@@ -289,6 +289,8 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
             $stadium_img_url = wp_get_attachment_image_src( get_post_thumbnail_id( $product->get_id() ), 'single-post-thumbnail' )[0];
             $championship_img_url = get_championship_img($match_championship);
 
+            $description = $product->get_description();
+
             $categories = [
                 get_variation_by_name($product, "Category 1"),
                 get_variation_by_name($product, "Category 2"),
@@ -320,25 +322,31 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     <div class="mts-product-header-overlay">
                         
                     </div>
-                    <div class="mts-product-header-left">
-                        <img class='mts-tickets-club' src='<?php echo $team_1_img_url; ?>'>
-                        <?php echo $team_names[0]; ?>
-                    </div>
-                    <div class="mts-product-header-middle">
-                        <div class='mts-product-header-middle-top'>
-                            <img class='mts-product-header-stadium-img' src='<?php echo $championship_img_url; ?>'>
+                    <div class="mts-product-header-top">
+                        <div class="mts-product-header-left">
+                            <img class='mts-tickets-club' src='<?php echo $team_1_img_url; ?>' alt='<?php echo $team_names[0] . "club image";?>'>
+                            <?php echo $team_names[0]; ?>
                         </div>
-                        <span class='mts-product-header-vs'>VS</span>
-                        <div class='mts-product-header-middle-spacer'></div>
-                        <div class='mts-product-header-middle-bottom'>
-                            <span class='mts-product-header-stadium'><?php echo $match_location ?></span>
-                            <span class='mts-product-header-date'><?php echo $match_date_new ?> <?php echo $match_time ?></span>
+                        <div class="mts-product-header-middle">
+                            <div class='mts-product-header-middle-top'>
+                                <img class='mts-product-header-stadium-img' src='<?php echo $championship_img_url; ?>' alt='<?php echo $match_championship . " logo";?>'>
+                            </div>
+                            <span class='mts-product-header-vs'>VS</span>
+                            <div class='mts-product-header-middle-spacer'></div>
+                            <div class='mts-product-header-middle-bottom'>
+                                <span class='mts-product-header-stadium'><?php echo $match_location ?></span>
+                                <span class='mts-product-header-date'><?php echo $match_date_new ?> <?php echo $match_time ?></span>
+                            </div>
+                        </div>
+                        <div class="mts-product-header-right">
+                            <img class='mts-tickets-club' src='<?php echo $team_2_img_url; ?>' alt='<?php echo $team_names[1] . " club image";?>'>
+                            <?php echo $team_names[1]; ?>
                         </div>
                     </div>
-                    <div class="mts-product-header-right">
-                        <img class='mts-tickets-club' src='<?php echo $team_2_img_url; ?>'>
-                        <?php echo $team_names[1]; ?>
+                    <div class='mts-product-header-bottom'>
+                        <span class='mts-product-description'><?php echo $description ?></span>
                     </div>
+                    
                 </div>
                 <div class='mts-product-info' id="mts-product-info">
                     <div class='mts-product-info-left'>
@@ -404,7 +412,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     <div class='mts-v-spacer-s-mobile'></div>
                     <div class='mts-product-info-right'>
                         <div class="mts-product-info-img">
-                            <img src="<?php echo $stadium_img_url ?>">
+                            <img src="<?php echo $stadium_img_url ?>" alt='<?php echo "Map of " . $match_location; ?>'>
                         </div>
                         <br>
                         <div class='mts-product-info-legend'>
