@@ -422,16 +422,18 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 </div>
                 <div class='mts-v-spacer-s-mobile'></div>
                 <script>
-                    const vp_width = document.documentElement.clientWidth;
+                    let vp_width = document.documentElement.clientWidth;
+                    
+                    function calculateTooltipPlacement(vieport_width){
+                        if(vieport_width < 1000){
+                            return "top";
+                        }else{
+                            return "right";
+                        }
+                    }
 
                     const tooltip = tippy("#mts-tickets-qty-add", {
-                        placement: (() => {
-                            if(vp_width < 1000){
-                                return "top";
-                            }else{
-                                return "right";
-                            }
-                        })(),
+                        placement: calculateTooltipPlacement(vp_width),
                         theme: "light",
                         maxWidth: "180px",
                         onHide: () => {
@@ -442,6 +444,14 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         }
                     })[0];
                     tooltip.disable();
+
+                    window.addEventListener("resize", () => {
+                        vp_width = document.documentElement.clientWidth;
+                        console.log("resizing");
+                        tooltip.setProps({
+                            placement: calculateTooltipPlacement(vp_width)
+                        })
+                    })
 
                     const cats_element = document.getElementById("mts-tickets-cats");
                     const info_element = document.getElementById("mts-product-info");
