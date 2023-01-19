@@ -291,6 +291,15 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
             $description = $product->get_description();
 
+            $date_confirm = $product->get_meta("date-confirm");
+
+            $match_date_str = $product->get_meta("match-date");
+
+            $date_confirm_img = [
+                "https://www.matchticketshop.com/wp-content/uploads/check-verified-01.svg",
+                "https://www.matchticketshop.com/wp-content/uploads/check-verified-01-1.svg"
+            ];
+
             $categories = [
                 get_variation_by_name($product, "Category 1"),
                 get_variation_by_name($product, "Category 2"),
@@ -319,8 +328,8 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                 <script src="https://unpkg.com/@popperjs/core@2"></script>
                 <script src="https://unpkg.com/tippy.js@6"></script>
                 <div class='mts-product-header'>
-                    <div class="mts-product-header-overlay">
-                        
+                    <div class="mts-product-header-guarantee">
+                        Your tickets are 100% guaranteed: <a href="/ticket-guarantee">read how</a>
                     </div>
                     <div class="mts-product-header-top">
                         <div class="mts-product-header-left">
@@ -344,7 +353,24 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         </div>
                     </div>
                     <div class='mts-product-header-bottom'>
-                        <span class='mts-product-description'><?php echo $description ?></span>
+                        <span class='mts-product-description' id="mts-product-match-confirmed">
+                            <img class="mts-product-desc-icon" 
+                                <?php
+                                    if($date_confirm === "1"){
+                                        echo "src='" . $date_confirm_img[1] . "'";
+                                    }else{
+                                        echo "src='" . $date_confirm_img[0] . "'";
+                                    }
+                                ?>
+                            >
+                            <?php //echo gettype($date_confirm) 
+                                if($date_confirm === "1"){
+                                    echo "Match date confirmed";
+                                }else{
+                                    echo "Match date not yet confirmed";
+                                }
+                            ?>
+                        </span>
                     </div>
                     
                 </div>
@@ -432,7 +458,78 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         }
                     }
 
-                    const tooltip = tippy("#mts-tickets-qty-add", {
+                    function calcTooltipPlacement(placementArr){
+                        //console.log(placementArr);
+                        //console.log(typeof placementArr);
+                        //console.log(Array)
+                        if(typeof placementArr === "string"){
+                            return placementArr;
+                        }else if(Array.isArray(placementArr)){
+                            let output = "top";
+                            let max = 0;
+                            let _vp_width = document.documentElement.clientWidth;
+                            placementArr.forEach(placement => {
+                                if(_vp_width > placement.breakpoint){
+                                    output = placement.placement;
+                                }
+                            });
+                            return output;
+                        }
+                    }
+
+                    class jorensTooltip {
+
+                        constructor(target_id, options){
+                            this.options = options;
+
+                            this.tooltip = tippy(target_id, {
+                                placement: calcTooltipPlacement(options.placement),//calcTooltipPlacement(placement),
+                                theme: options.theme,//options.theme,
+                                maxWidth: options.maxWidth,//options.maxWidth,
+                                onHide: options.onHide,//options.onHide,
+                                content: options.content
+                            })[0];
+
+                            window.addEventListener("resize", () => {
+                                //vp_width = document.documentElement.clientWidth;
+                                
+                                console.log("resizing");
+                                console.log("hello");
+                                //console.log(this);
+                                console.log(calcTooltipPlacement(this.options.placement));
+                                const placement = calcTooltipPlacement(this.options.placement);
+                                console.log(this.tooltip);
+                                this.tooltip.setProps({
+                                    placement: calcTooltipPlacement(placement)
+                                })
+                            });
+                        };
+
+                        //tooltip;
+                        //placementBreakpoints;
+                    }
+
+                    let tooltipConfirmed = null;
+
+                    const isDateConfirmed = <?php echo $date_confirm === "1" ? "true" : "false"; ?>;
+
+                    if(!isDateConfirmed){
+                        tooltipConfirmed = new jorensTooltip("#mts-product-match-confirmed", {
+                            placement: [
+                                {breakpoint: 0, placement: "bottom"},
+                                {breakpoint: 850, placement: "right"}
+                            ],
+                            theme: "light",
+                            maxWidth: "250px",
+                            onHide: () => {
+                                return true;
+                            },
+                            content: "Date will soon be confirmed by the league, until then it might slightly change. Send us a message for more info!"
+                        })
+                    }
+                    
+
+                    const tooltipTickets = tippy("#mts-tickets-qty-add", {
                         placement: calculateTooltipPlacement(vp_width),
                         theme: "light",
                         maxWidth: "180px",
@@ -443,12 +540,12 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                             return true;
                         }
                     })[0];
-                    tooltip.disable();
+                    tooltipTickets.disable();
 
                     window.addEventListener("resize", () => {
                         vp_width = document.documentElement.clientWidth;
                         console.log("resizing");
-                        tooltip.setProps({
+                        tooltipTickets.setProps({
                             placement: calculateTooltipPlacement(vp_width)
                         })
                     })
@@ -504,9 +601,9 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                         render_total_price();
 
                         if(tickets_qty > 1){
-                            tooltip.show();
+                            tooltipTickets.show();
                         }else{
-                            tooltip.hide();
+                            tooltipTickets.hide();
                         }
                         
                     }
@@ -529,17 +626,17 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
 
                         if(tickets_qty === 1){
                             console.log("one");
-                            tooltip.disable();
+                            tooltipTickets.disable();
                         }
                         if(tickets_qty === 2){
                             console.log("two");
-                            tooltip.enable();
-                            tooltip.setContent("We guarantee that you will be seated together");
+                            tooltipTickets.enable();
+                            tooltipTickets.setContent("We guarantee that you will be seated together");
                             //tooltip.show();
                         }else if(tickets_qty > 2){
                             console.log("three");
-                            tooltip.setContent("You will likely be seated together, please reach out through chat so our team can confirm");
-                            tooltip.enable();
+                            tooltipTickets.setContent("You will likely be seated together, please reach out through chat so our team can confirm");
+                            tooltipTickets.enable();
                             //tooltip.show();
                         }
                     }
