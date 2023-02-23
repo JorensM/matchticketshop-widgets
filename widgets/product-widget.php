@@ -655,7 +655,7 @@ class Elementor_Product_Widget extends \Elementor\Widget_Base {
                     }
 
                     function deselect_all_categories(){
-                        for(let i = 1; i < 4; i++){
+                        for(let i = 1; i < 5; i++){
                             const category_button_element = document.getElementById("mts-category-button-" + i);
 
                             if(category_button_element !== null){
